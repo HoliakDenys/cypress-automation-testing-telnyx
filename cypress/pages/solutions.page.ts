@@ -21,22 +21,19 @@ export default class SolutionsPage extends BasePage {
         this.getSearchField()
             .clear()
             .type(`${query}{enter}`);
-    }
 
-    getArticleTitle(article: JQuery<HTMLElement>) {
-        return cy.wrap(article)
-            .find('h3.c-rMlRu')
-            .should('exist')
-            .should('be.visible');
+        cy.wait(500);
     }
     
     validateArticlesContainSearchText(query: string) {
         this.getSolutionsArticles().each(($el) => {
-            this.getArticleTitle($el);
-    
             cy.wrap($el)
                 .find('h3.c-rMlRu')
-                .should('include.text', query);
+                .should('exist')
+                .should('be.visible')
+                .then(() => {
+                    cy.wrap($el).find('h3.c-rMlRu').should('include.text', query);
+                });
         });
-    }    
+    }
 }
