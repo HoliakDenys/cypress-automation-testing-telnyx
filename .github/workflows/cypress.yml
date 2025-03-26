@@ -30,18 +30,3 @@ jobs:
       - name: Run Cypress Tests and Record to Dashboard
         run: |
           npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
-
-      - name: Commit and Push Report to Another Branch
-        run: |
-          git checkout -b report-branch
-          git add allure-report
-          git commit -m "Add new Allure report"
-          git push --set-upstream origin report-branch
-
-      - name: Setup GitHub Pages
-        run: |
-          git checkout -b gh-pages
-          mv allure-report/ /path/to/gh-pages/
-          git add .
-          git commit -m "Publish Allure report on GitHub Pages"
-          git push --force origin gh-pages
