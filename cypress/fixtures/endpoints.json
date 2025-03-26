@@ -1,0 +1,7 @@
+{
+    "homepage": "/",
+    "solutions": "solutions",
+    "globalCoverage": "global-coverage",
+    "resources": "resources",
+    "iotSim": "products/iot-sim-card"
+}

@@ -1,0 +1,28 @@
+{
+  "name": "cypress-automation-testing-telnyx",
+  "version": "1.0.0",
+  "description": "Project for automated testing with Cypress and TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HoliakDenys/cypress-automation-testing-telnyx.git"
+  },
+  "keywords": [
+    "cypress",
+    "typescript"
+  ],
+  "author": "Denys Holiak (https://github.com/HoliakDenys)",
+  "license": "ISC",
+  "homepage": "https://github.com/HoliakDenys/cypress-automation-testing-telnyx#readme",
+  "devDependencies": {
+    "@types/cypress": "^1.1.6",
+    "@types/node": "^22.13.11",
+    "cypress": "^14.2.0",
+    "dotenv": "^16.4.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}
