@@ -24,12 +24,19 @@ export default class SolutionsPage extends BasePage {
     }
 
     getArticleTitle(article: JQuery<HTMLElement>) {
-        return cy.wrap(article).find('h3.c-rMlRu');
-    }    
-
+        return cy.wrap(article)
+            .find('h3.c-rMlRu')
+            .should('exist')
+            .should('be.visible');
+    }
+    
     validateArticlesContainSearchText(query: string) {
         this.getSolutionsArticles().each(($el) => {
-            this.getArticleTitle($el).should('include.text', query);
+            this.getArticleTitle($el);
+    
+            cy.wrap($el)
+                .find('h3.c-rMlRu')
+                .should('include.text', query);
         });
-    }
+    }    
 }
