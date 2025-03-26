@@ -23,12 +23,13 @@ export default class SolutionsPage extends BasePage {
             .type(`${query}{enter}`);
     }
 
+    getArticleTitle(article: JQuery<HTMLElement>) {
+        return cy.wrap(article).find('h3.c-rMlRu');
+    }    
+
     validateArticlesContainSearchText(query: string) {
         this.getSolutionsArticles().each(($el) => {
-            cy.wrap($el).as('article');
-            cy.get('@article')
-                .find('h3.c-rMlRu')
-                .should('include.text', query);
+            this.getArticleTitle($el).should('include.text', query);
         });
     }
 }

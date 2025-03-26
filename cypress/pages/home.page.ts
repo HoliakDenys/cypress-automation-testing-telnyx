@@ -35,11 +35,11 @@ export default class HomePage extends BasePage {
 
     selectModel(modelName: string): void {
         this.getModelDropdownButton().click({force: true});
-        cy.get(`div[aria-label="${modelName}"]`).click();
+        cy.get(`div[aria-label="${modelName}"]`).click({force: true});
     }
 
     clickConfirmButton(): void {
-        this.getConfirmButton().click();
+        this.getConfirmButton().click({force: true});
     }
 
     checkSocialLink(platformName: string) {
