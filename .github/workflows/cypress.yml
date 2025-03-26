@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: Cypress Automation Tests
 
 on:
   push:
@@ -9,24 +9,39 @@ on:
       - main
 
 jobs:
-  cypress-run:
+  test:
     runs-on: ubuntu-latest
+    env:
+      BASE_URL: 'https://telnyx.com/'
+      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
 
       - name: Install dependencies
+        run: npm install
+
+      - name: Run Cypress Tests and Record to Dashboard
         run: |
-          npm ci
-          
-      - name: Run Cypress tests
+          npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
+
+      - name: Commit and Push Report to Another Branch
         run: |
-          npx cypress run
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          git checkout -b report-branch
+          git add allure-report
+          git commit -m "Add new Allure report"
+          git push --set-upstream origin report-branch
+
+      - name: Setup GitHub Pages
+        run: |
+          git checkout -b gh-pages
+          mv allure-report/ /path/to/gh-pages/
+          git add .
+          git commit -m "Publish Allure report on GitHub Pages"
+          git push --force origin gh-pages
