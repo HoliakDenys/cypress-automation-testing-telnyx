@@ -28,7 +28,7 @@ Test cases for this project are documented in Google Sheets and can be accessed 
     ```
 
 3. **Set up the Cypress Record Key**:
-   - The Cypress Record Key is securely stored as a **GitHub Secret**.``
+   - The Cypress Record Key is securely stored as a **GitHub Secret**.
 
 ## Run Tests
 
