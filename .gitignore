@@ -2,3 +2,4 @@ node_modules/
 .env
 cypress/screenshots/
 support/
+cypress/downloads/

@@ -6,9 +6,10 @@ it('Validation of country filter in Global Coverage (Number Types tab)', () => {
     globalCoveragePage.open();
     globalCoveragePage.clickNumberTypesButton();
     globalCoveragePage.selectCountryFromDropdown('Austria');
+    globalCoveragePage.clickNumberTypesButton();
 
     globalCoveragePage.CoverageTableNumberTypesTab
-        .find('button')
+        .find('tr')
         .should('have.length', 1)
-        .should('have.text', 'Austria ');
+        .should('have.text', 'Austria');
 })

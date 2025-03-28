@@ -11,6 +11,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chrome, edge, electron]
+
     env:
       BASE_URL: 'https://telnyx.com/'
       CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
@@ -22,11 +26,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run Cypress Tests and Record to Dashboard
+      - name: Run Cypress Tests on ${{ matrix.browser }}
         run: |
-          npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
+          npx cypress run --browser ${{ matrix.browser }} --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
