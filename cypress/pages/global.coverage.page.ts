@@ -6,42 +6,39 @@ export default class GlobalCoveragePage extends BasePage {
         super('globalCoverage');
     }
 
-    getNumberTypesButton() {
-        return cy.get('.c-bHRSJu').contains("Number types");
+    get NumberTypesButton() {
+        return cy.xpath("//button[@role='tab' and contains(text(), 'Number types')]");
     }
     
-    getSearchCountryButton() {
-        return cy.get('button').contains('Search country');
+    get SearchCountryButton() {
+        return cy.contains('button', 'Search country');
     }
 
-    getFilterSelectedButton() {
+    get FilterSelectedButton() {
         return cy.contains('span', '1 filter selected').closest('button');
     }
 
-    getCoverageTableNumberTypesTab() {
+    get CoverageTableNumberTypesTab() {
         return cy.get('#accordion');
     }
 
-    getNumberTypesField() {
-        return cy.get('c-hOquJL');
+    get ResetFiltersButton() {
+        return cy.contains('button', 'Reset filters');
     }
 
     clickNumberTypesButton(): void {
-        this.getNumberTypesButton().click({force: true});
+        this.NumberTypesButton.click({force: true});
     }
 
     selectCountryFromDropdown(countryName: string): void {
-        this.getSearchCountryButton().click();
-        const countryCheckboxSelector = `div[role="menuitemcheckbox"] span:contains("${countryName}")`;
-        cy.get(countryCheckboxSelector).click();
-    }
+        this.SearchCountryButton.click();
+        const countryCheckboxSelector = `//div[@role='menuitemcheckbox']//span[text()='${countryName}']/preceding-sibling::input[@type='checkbox']`;
+        cy.xpath(countryCheckboxSelector).click();
 
-    getResetFiltersButton() {
-        return cy.contains('.c-ewUecD', 'Reset filters');
     }
 
     verifyFilteringAndReset(country: string) {
-        this.getCoverageTableNumberTypesTab()
+        this.CoverageTableNumberTypesTab
             .find('button')
             .then(($buttonsBefore) => {
                 const initialCount = $buttonsBefore.length;
@@ -49,13 +46,13 @@ export default class GlobalCoveragePage extends BasePage {
                 this.selectCountryFromDropdown(country);
                 this.clickNumberTypesButton();
 
-                this.getCoverageTableNumberTypesTab()
+                this.CoverageTableNumberTypesTab
                     .find('button')
                     .should('have.length', 1);
 
-                this.getResetFiltersButton().click({force: true});
+                this.ResetFiltersButton.click({force: true});
 
-                this.getCoverageTableNumberTypesTab()
+                this.CoverageTableNumberTypesTab
                     .find('button')
                     .should('have.length', initialCount);
             });

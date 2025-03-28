@@ -5,41 +5,54 @@ export default class HomePage extends BasePage {
         super('homepage');
     }
 
-    getAdvancedSettingsButton() {
-        return cy.get('.c-eMQMVZ').find('button').first();
-    }
-
-    getModelDropdownButton() {
-        return cy.get('.c-lgwftA');
+    get AdvancedSettingsButton() {
+        return cy.get('button[aria-label="Advanced Settings"]');
     }
 
     getLinkedInLink() {
-        return cy.get('.c-tKuzq').eq(0);
+        return cy.fixture('socialLinks').then((socialLinks) => {
+            const linkedInUrl = socialLinks.LinkedIn;
+            return cy.get(`a[href="${linkedInUrl}"]`);
+        });
     }
-
+    
     getTwitterLink() {
-        return cy.get('.c-tKuzq').eq(1);
+        return cy.fixture('socialLinks').then((socialLinks) => {
+            const twitterUrl = socialLinks.Twitter;
+            return cy.get(`a[href="${twitterUrl}"]`);
+        });
     }
-
+    
     getFacebookLink() {
-        return cy.get('.c-tKuzq').eq(2);
+        return cy.fixture('socialLinks').then((socialLinks) => {
+            const facebookUrl = socialLinks.Facebook;
+            return cy.get(`a[href="${facebookUrl}"]`);
+        });
     }
 
-    getConfirmButton() {
-        return cy.get('button.c-ltigS').contains('Confirm');
+    get ConfirmButton() {
+        return cy.contains('button', 'Confirm');
+    }
+
+    getModelButton(modelName: string) {
+        return cy.contains(modelName).closest('button');
+    }
+
+    getMenuItemByText(modelName: string) {
+        return cy.contains('div[role="menuitem"]', modelName);
     }
 
     clickAdvancedSettingsButton(): void {
-        this.getAdvancedSettingsButton().click();
+        this.AdvancedSettingsButton.click();
     }
 
-    selectModel(modelName: string): void {
-        this.getModelDropdownButton().click({force: true});
-        cy.get(`div[aria-label="${modelName}"]`).click({force: true});
+    switchModel(previousModelName: string, newModelName: string): void {
+        this.getModelButton(previousModelName).click({ force: true });
+        this.getMenuItemByText(newModelName).click({ force: true });
     }
 
     clickConfirmButton(): void {
-        this.getConfirmButton().click({force: true});
+        this.ConfirmButton.click({force: true});
     }
 
     checkSocialLink(platformName: string) {
@@ -57,6 +70,7 @@ export default class HomePage extends BasePage {
                     break;
                 case 'twitter':
                     socialLink = this.getTwitterLink();
+                    break;
                 default:
                     return;
             }
@@ -73,9 +87,11 @@ export default class HomePage extends BasePage {
     }
     
     clickFooterLinkByText(linkText: string) {
-        cy.get('a.c-fZcwcz')
-            .contains(linkText)
-            .click({force: true});
+        cy.fixture('footerLinks').then((footerLinks) => {
+            const url = footerLinks[linkText];
+            if (url)
+                cy.get(`a[href="${url}"]`).click({ force: true });
+        });
     }
 
     verifyUrlContains(text: string) {

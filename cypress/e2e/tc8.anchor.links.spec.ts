@@ -5,14 +5,7 @@ it('Validation of anchor links functionality in Resources tab articles', () => {
 
     resourcePage.open();
     resourcePage.selectArticleByText('The future of contact centers: AI adoption guide');
-
-    resourcePage.selectLinkByText("Market trends: AI's impact on contact centers");
-    resourcePage.verifyElementInViewByText("Market trends: AI's impact on contact centers");
-
-    resourcePage.selectLinkByText('How AI technologies enhance contact centers');
-    resourcePage.verifyElementInViewByText('How AI technologies enhance contact centers');
-
-    resourcePage.selectLinkByText('How AI technologies enhance contact centers');
-    resourcePage.verifyElementInViewByText('How AI technologies enhance contact centers');
-
-})
+    resourcePage.selectAndVerifyLinkByText('Step-by-step guide to AI implementation with Telnyx');
+    resourcePage.selectAndVerifyLinkByText('How AI technologies enhance contact centers');
+    resourcePage.selectAndVerifyLinkByText("Market trends: AI's impact on contact centers");
+});

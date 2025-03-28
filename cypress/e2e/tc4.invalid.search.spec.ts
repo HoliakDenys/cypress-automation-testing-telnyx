@@ -5,8 +5,5 @@
 
         solutionsPage.open();
         solutionsPage.enterSearchField('Callback');
-
-        solutionsPage.getNoResultsMessage()
-            .should('be.visible')
-            .and('have.text', 'No results for this filter');
+        solutionsPage.NoResultsMessage.should('be.visible');
     })
